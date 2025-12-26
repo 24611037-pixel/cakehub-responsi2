@@ -3,7 +3,9 @@
     if (!form) return;
 
     const $ = id => document.getElementById(id);
-    const WEB_APP_URL = "";
+
+    // GANTI dengan URL Web App Apps Script kamu (yang /exec)
+    const WEB_APP_URL = "PASTE_URL_WEB_APP_KAMU_DI_SINI";
 
     function updateSummary() {
         const jenis = $('jenis_kue')?.value || '-';
@@ -49,6 +51,7 @@
 
         const hiasanJumlah = parseInt($('hiasan_jumlah')?.value, 10) || 0;
         total += hiasanJumlah * 20000;
+
         return total;
     }
 
@@ -186,6 +189,8 @@
         });
 
         data.jumlah_kue = totalJumlahKue;
+
+        // INI yang benar (key konsisten)
         data.jumlah_hiasan = parseInt($('hiasan_jumlah')?.value, 10) || 0;
 
         const totalHarga = getTotalPrice();
@@ -195,7 +200,8 @@
         $('modalTelepon') && ($('modalTelepon').textContent = data.telepon || '-');
         $('modalEmail') && ($('modalEmail').textContent = data.email || '-');
 
-        const hiasan = data.hiasan_jumlah || '0';
+        // FIX: pakai data.jumlah_hiasan, bukan data.hiasan_jumlah
+        const hiasan = data.jumlah_hiasan || 0;
         const modalHiasanEl = $('modalHiasan');
         if (modalHiasanEl) {
             if (parseInt(hiasan, 10) > 0) {
@@ -210,11 +216,7 @@
         $('modalJam') && ($('modalJam').textContent = data.jam_pengambilan || '-');
         $('modalCatatan') && ($('modalCatatan').textContent = data.catatan || '-');
 
-        // =========================
-        // Fill items (REVISI UTAMA)
-        // - TIDAK digabung "+ hiasan..." ke item kue
-        // - Hiasan tampil BARIS TERPISAH seperti gambar yang kamu minta
-        // =========================
+        // Fill items (hiasan dipisah)
         const modalItems = $('modalItems');
         if (modalItems) {
             modalItems.innerHTML = '';
@@ -223,7 +225,6 @@
             cakeSelects.forEach((select, index) => {
                 const jenis = select.value;
 
-                // name input jumlah: jumlah, jumlah2, jumlah3, dst
                 const jumlahInput = form.querySelector(`input[name="jumlah${index === 0 ? '' : index + 1}"]`);
                 const jumlah = jumlahInput?.value || '1';
 
@@ -243,11 +244,12 @@
             }
         }
 
-        // Calculate total for modal
+        // Total untuk modal
         let total = getTotalPrice();
         $('modalTotal') && ($('modalTotal').textContent =
             total > 0 ? 'Rp ' + total.toLocaleString('id-ID') : 'Rp 0');
 
+        // Kirim data ke Apps Script
         fetch(WEB_APP_URL, {
             method: "POST",
             mode: "no-cors",
@@ -264,3 +266,4 @@
     updateSummary();
     updateConfirmation();
 })();
+
