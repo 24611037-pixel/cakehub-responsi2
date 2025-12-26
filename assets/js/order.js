@@ -5,8 +5,8 @@
     const $ = id => document.getElementById(id);
 
     // GANTI dengan URL Web App Apps Script kamu (yang /exec)
-    const WEB_APP_URL = "PASTE_URL_WEB_APP_KAMU_DI_SINI";
-
+    const WEB_APP_URL = "https://script.google.com/a/macros/students.uii.ac.id/s/AKfycbwNrwtGzvCckVKXlMrbIUmK59v1I0kteTwUa8Ate-_oRkmXaN_0OGo3QC-9Lkyf3uqB/exec";
+    
     function updateSummary() {
         const jenis = $('jenis_kue')?.value || '-';
         const jumlah = $('jumlah')?.value || '-';
