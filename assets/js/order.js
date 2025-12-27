@@ -5,7 +5,7 @@
     const $ = id => document.getElementById(id);
 
     // GANTI dengan URL Web App Apps Script kamu (yang /exec)
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw8oCPsEJSnBmC120OtO9nJvQKVf-xGJ42x0Wi35-795ABbe_rMQmXVemIydc8o2Fpo/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwbdz3vFSA5k8WwYCR2gqA0Hq7LYhTcIzFpncyYiCx9JetnFynGKMwgrmIF8E1P-Vht/exec";
     
     function updateSummary() {
         const jenis = $('jenis_kue')?.value || '-';
@@ -266,6 +266,7 @@
     updateSummary();
     updateConfirmation();
 })();
+
 
 
 
